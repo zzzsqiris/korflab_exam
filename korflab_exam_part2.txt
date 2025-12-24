@@ -1,0 +1,41 @@
+Part2:
+1)
+command: zgrep -c ">" *.faa.gz
+output: 4298
+
+2)
+command: zgrep -c "     CDS" *.gbff.gz
+output: 4316
+
+3)
+.gbff file include all coding sequence
+.faa file include proteins that are successfully translated
+not all coding sequence are successfully translated into protein
+might include psudogenes / partial coding sequence / mulfunction coding sequence
+
+4)
+command: zgrep "     tRNA" *.gff.gz | wc -l
+output: 86
+
+5)
+command: zless *.gff.gz | cut -f3 | sort | uniq -c
+output:
+   1 #!genome-build ASM584v2
+   1 #!genome-build-accession NCBI_Assembly:GCF_000005845.2
+   1 #!gff-spec-version 1.21
+   1 #!processor NCBI annotwriter
+   1 ###
+   1 ##gff-version 3
+   1 ##sequence-region NC_000913.3 1 4641652
+   1 ##species https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?id=511145
+4337 CDS
+ 207 exon
+4494 gene
+  50 mobile_genetic_element
+  99 ncRNA
+   1 origin_of_replication
+ 145 pseudogene
+  22 rRNA
+   1 region
+  48 sequence_feature
+  86 tRNA
