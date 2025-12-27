@@ -2,8 +2,8 @@ import argparse
 import math
 parser = argparse.ArgumentParser()
 parser.add_argument("infile")
-parser.add_argument("--window_size", type = int, default = 11)
-parser.add_argument("--entropy_threshold", type = float, default = 1.4)
+parser.add_argument("--window_size", type=int, default = 11)
+parser.add_argument("--entropy_threshold", type=float, default = 1.4)
 parser.add_argument("--softmask", action="store_true")
 args = parser.parse_args()
 
