@@ -16,7 +16,7 @@ with open(args.fasta) as f2:
         else:
             chr_seq[chr] += line
 
-pos_lst = []
+mRNA_dict = {}
 with open(args.gff3) as f1:
     for line in f1:
         line = line.rstrip()
@@ -26,6 +26,7 @@ with open(args.gff3) as f1:
             start = int(line[3])
             end = int(line[4])
             dir = line[6]
+            id = line[-1]
             seq = chr_seq[chr][start-1:end]
             if dir == "-":
                 seq = seq[::-1]
@@ -34,7 +35,15 @@ with open(args.gff3) as f1:
                     if seq[i] == "T":seq[i] = "A"
                     if seq[i] == "C":seq[i] = "G"
                     if seq[i] == "G":seq[i] = "C"
-            print(line[-1], "".join(seq))
-                   
+            if id not in mRNA_dict:
+                mRNA_dict[id] = []
+            mRNA_dict[id].append("".join(seq))
+
+full_mRNA_dict = {}
+for id, seqs in mRNA_dict.items():
+    full_seq = "".join(seqs)
+    full_mRNA_dict[id] = full_seq
+
+print(full_mRNA_dict)
 
     
