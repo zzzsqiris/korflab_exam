@@ -1,3 +1,4 @@
+import json
 import argparse
 parser = argparse.ArgumentParser()
 parser.add_argument("infile")
@@ -46,8 +47,18 @@ for pos in pos_lst:
     end = pos[1]
     dir = pos[2]
     seq = ori_seq[start-1:end]
-    # print(seq)
-
+    if dir == "-":
+        seq = seq[::-1]
+        for i in range (len(seq)):
+            if seq[i] == 'A': seq[i] = 'T'
+            if seq[i] == 'T': seq[i] = 'A'
+            if seq[i] == 'C': seq[i] = 'G'
+            if seq[i] == 'G': seq[i] = 'C'
+    
+    start_codon = "".join(seq[:3])
+    if args.skip_non_canonical and start_codon != "atg":
+        continue
+    
     # position coverage
     if len(pos_count) == 0:
         pos_count = [1] * len(seq)
@@ -84,4 +95,6 @@ for nt in "ATCG":
         prob = nt_pos_count[nt][i] / pos_count[i]
         nt_pos_prob[nt].append(round(prob, 3))
 
-print(nt_pos_prob)
+json_string = json.dumps(nt_pos_prob)
+
+print(json_string)
